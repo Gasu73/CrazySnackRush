@@ -38,4 +38,3 @@ class Receta:
         # Comparar
         return requeridos == entregados
     
-    
