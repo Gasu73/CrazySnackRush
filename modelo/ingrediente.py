@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 class Ingrediente(ABC):
-    def __init__(self, nombre: str, tiempo_preparacion_req: int):
+    def __init__(self, nombre: str, tiempo_preparacion_req: int = 0):
         # Encapsulamiento: Privado (solo esta clase lo ve)
         self.__nombre = nombre
         # Encapsulamiento: Protegido (las clases hijas pueden verlo y modificarlo)
