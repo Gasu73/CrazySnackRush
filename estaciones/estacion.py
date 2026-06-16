@@ -5,7 +5,10 @@ class Estacion(ABC):
         self.nombre = nombre
         self.ingredientes_aceptados = ingredientes_aceptados or []
         self.ingrediente_actual = None      # lo que está sobre la estación
-    
+        self.pos_x = pos_x #Posición en el grid
+        self.pos_y = pos_y
+
+
     def acepta_ingrediente(self, ingrediente):
         """Verifica si la estación puede procesar ese tipo de ingrediente"""
         return type(ingrediente) in self.ingredientes_aceptados
