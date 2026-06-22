@@ -1,3 +1,4 @@
+import copy
 from estaciones.estacion import Estacion
 
 class Despensa(Estacion):
@@ -5,13 +6,11 @@ class Despensa(Estacion):
         super().__init__(
             nombre=f"Despensa de {ingrediente.nombre}",
             ingredientes_aceptados=[]       # no procesa, solo entrega
-
-        )
+            )
 
         self.ingrediente = ingrediente
     
     def interactuar(self, chef):
-
 
         """
         Si el chef tiene las manos vacías,
@@ -23,6 +22,6 @@ class Despensa(Estacion):
             print(f"{chef.nombre} ya tiene algo en mano, suéltalo primero.")
             return
         
-        nuevo = self.ingrediente
+        nuevo = copy.deepcopy(self.ingrediente)
         chef.recoger_ingrediente(nuevo)
         print(f"{chef.nombre} tomó {nuevo.nombre} de la despensa.")

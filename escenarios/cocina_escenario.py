@@ -190,7 +190,6 @@ class CocinaEscenario:
 
 
     #  UTILIDADES
-    
     def mostrar_puntajes(self):
         print("\nPuntajes finales:")
         for chef in self.chefs:

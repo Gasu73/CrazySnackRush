@@ -45,8 +45,7 @@ class TablaDeCortar(Estacion):
         # Si está crudo, iniciar el proceso de corte
         if not self.en_proceso:
             print(f"Cortando {self.ingrediente_actual.nombre}...")
-            self.en_proceso = True
-            time.sleep(TIEMPO_CORTE)          # esto cambiará por un timer en la UI
+            self.en_proceso = True        # esto cambiará por un timer en la UI
             self.ingrediente_actual.preparar()
             self.en_proceso = False
             print(f"{self.ingrediente_actual.nombre} listo para recoger.")
