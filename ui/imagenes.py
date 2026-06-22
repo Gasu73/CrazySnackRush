@@ -1,4 +1,3 @@
-#ui/imagenes.py
 import pygame
 
 
