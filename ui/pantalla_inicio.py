@@ -1,13 +1,16 @@
+# ui/pantalla_inicio.py
 import pygame
 from ui.constantes import *
 
 class PantallaInicio:
     def __init__(self, pantalla):
         self.pantalla = pantalla
-        self.fuente_titulo  = pygame.font.SysFont("Arial", 52, bold=True)
-        self.fuente_sub     = pygame.font.SysFont("Arial", 28)
-        self.fuente_chica   = pygame.font.SysFont("Arial", 20)
-        self.seleccion      = 0       # escenario seleccionado (0, 1, 2)
+        
+        # Fuentes estándar pero con tamaños limpios
+        self.fuente_titulo  = pygame.font.SysFont("Arial", 48, bold=True)
+        self.fuente_sub     = pygame.font.SysFont("Arial", 22, bold=True)
+        self.fuente_chica   = pygame.font.SysFont("Arial", 16)
+        self.seleccion      = 0       
 
         self.opciones = [
             "Restaurante Hamburguesas  (Fácil)",
@@ -16,10 +19,6 @@ class PantallaInicio:
         ]
 
     def manejar_evento(self, evento):
-        """
-        Retorna el índice del escenario elegido,
-        o None si el jugador no confirmó aún.
-        """
         if evento.type == pygame.KEYDOWN:
             if evento.key == pygame.K_UP:
                 self.seleccion = (self.seleccion - 1) % len(self.opciones)
@@ -30,37 +29,38 @@ class PantallaInicio:
         return None
 
     def dibujar(self):
-        self.pantalla.fill(COLOR_FONDO)
+        # Fondo completamente negro para dar atmósfera limpia/oscura
+        self.pantalla.fill((15, 15, 15))
 
-        # Título
-        titulo = self.fuente_titulo.render(
-            "Crazy Snack Rush TEC", True, (255, 200, 60)
-        )
-        self.pantalla.blit(titulo, (ANCHO // 2 - titulo.get_width() // 2, 80))
+        # ── TÍTULO ASIMÉTRICO (Estilo FNAF / Menú de lado) ──
+        # Lo tiramos arriba a la izquierda en lugar del centro aburrido
+        titulo = self.fuente_titulo.render("Crazy Snack Rush", True, (220, 220, 220))
+        self.pantalla.blit(titulo, (50, 100))
 
-        subtitulo = self.fuente_sub.render(
-            "Selecciona un escenario", True, COLOR_HUD_TEXTO
-        )
-        self.pantalla.blit(subtitulo, (ANCHO // 2 - subtitulo.get_width() // 2, 160))
+        subtitulo = self.fuente_sub.render("SUB-SISTEMA TEC", True, (100, 100, 100))
+        self.pantalla.blit(subtitulo, (50, 155))
 
-        # Opciones
+        # ── BOTONES ALINEADOS A UN COSTADO ──
+        # En lugar de cajas centradas, son líneas limpias alineadas a la derecha
+        X_BOTONES = ANCHO - 450  # Desplazados hacia la derecha de la pantalla
+        
         for i, opcion in enumerate(self.opciones):
-            es_seleccionada = i == self.seleccion
-            color_fondo = COLOR_RECETA_BORDE if es_seleccionada else COLOR_RECETA_FONDO
-            color_texto = (255, 255, 255) if es_seleccionada else (180, 180, 180)
+            es_activa = (i == self.seleccion)
+            
+            # Si está seleccionado, brilla en rojo/naranja y se desplaza un poco a la izquierda
+            if es_activa:
+                color_texto = (255, 70, 70)
+                offset_x = -15  # Efecto visual de selección básica
+                marcador = "> "
+            else:
+                color_texto = (130, 130, 130)
+                offset_x = 0
+                marcador = "  "
 
-            rect = pygame.Rect(ANCHO // 2 - 280, 240 + i * 80, 560, 60)
-            pygame.draw.rect(self.pantalla, color_fondo, rect, border_radius=10)
-            pygame.draw.rect(self.pantalla, COLOR_RECETA_BORDE, rect, 2, border_radius=10)
+            # Renderizado de la opción de texto plano
+            texto = self.fuente_sub.render(f"{marcador}{opcion}", True, color_texto)
+            self.pantalla.blit(texto, (X_BOTONES + offset_x, 260 + i * 70))
 
-            texto = self.fuente_sub.render(opcion, True, color_texto)
-            self.pantalla.blit(
-                texto,
-                (rect.x + 20, rect.y + 15)
-            )
-
-        # Instrucciones
-        inst = self.fuente_chica.render(
-            "↑↓ para navegar   |   ENTER para jugar", True, (120, 120, 120)
-        )
-        self.pantalla.blit(inst, (ANCHO // 2 - inst.get_width() // 2, 530))
+        # ── INSTRUCCIONES ABAJO A LA IZQUIERDA ──
+        inst = self.fuente_chica.render("[W/S o Flechas para mover  •  ENTER para ejecutar]", True, (70, 70, 70))
+        self.pantalla.blit(inst, (50, ANCHO // 2 + 120))
