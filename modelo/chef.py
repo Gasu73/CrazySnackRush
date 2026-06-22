@@ -1,9 +1,20 @@
+# chef.py
 class Chef:
-    def __init__(self, nombre: str):
+    def __init__(self, nombre, pos_x=0, pos_y=0):
         self.nombre = nombre
-        self.ingrediente_en_mano = None
         self.puntos = 0
+        self.ingrediente_en_mano = None    # solo puede cargar 1 o una lista de ingredientes (ensamble)
 
+
+        #NUEVO — posición en el grid
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+        self.direccion = (1, 0)     # mira a la derecha por defecto
+    
+    def _mover(self, dx, dy):
+        # La dirección se actualiza con cada movimiento
+        self.direccion = (dx, dy)
+    
     def recoger_ingrediente(self, ingrediente):
         if self.ingrediente_en_mano is None:
             self.ingrediente_en_mano = ingrediente
@@ -20,3 +31,7 @@ class Chef:
         self.puntos += puntos
         if self.puntos < 0:
             self.puntos = 0           # mínimo es 0 según el enunciado
+    
+    def __str__(self):
+        mano = self.ingrediente_en_mano or "vacía"
+        return f"Chef {self.nombre} | Puntos: {self.puntos} | Mano: {mano}"
