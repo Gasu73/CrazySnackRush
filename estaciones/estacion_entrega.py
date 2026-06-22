@@ -1,17 +1,24 @@
-# estaciones/estacion_entrega.py
 from estaciones.estacion import Estacion
 
 class EstacionEntrega(Estacion):
-    def __init__(self, recetas_activas):
-        super().__init__(nombre="Estación de Entrega")
-        self.recetas_activas = recetas_activas    # referencia a la lista de la cocina
-    
+    def __init__(self, cocina=None, pos_x=0, pos_y=0):
+        super().__init__(nombre="Estacion de Entrega", pos_x=pos_x, pos_y=pos_y)
+        self.cocina = cocina   # referencia a CocinaEscenario
+
     def interactuar(self, chef):
-        if chef.ingrediente_en_mano is None:
-            print("No tienes nada para entregar.")
-            return
+        """
+        Recibe la lista de ingredientes desde EstacionEnsamble
+        y llama a intentar_entrega() en la cocina.
+        """
+        ingredientes = chef.ingrediente_en_mano
         
-        # Por ahora el chef entrega de a un ingrediente
-        # En etapas posteriores esto se manejará con una lista/bandeja
-        print(f"Entregando {chef.ingrediente_en_mano.nombre}...")
-        print("(La validación completa de recetas se conecta en Etapa 3)")
+        if not ingredientes:
+            print("No hay ingredientes para entregar.")
+            return
+
+        exito = self.cocina.intentar_entrega(chef, ingredientes)
+        if exito:
+            chef.ingrediente_en_mano = None 
+        
+        if not exito:
+            print("Los ingredientes no coinciden con ninguna receta.")

@@ -7,7 +7,9 @@ from estaciones.despensa import Despensa
 from estaciones.tabla_cortar import TablaDeCortar
 from estaciones.cocina_sartan import CocinaSartan
 from estaciones.freidora import Freidora
+from estaciones.estacion_basura import EstacionBasura
 from estaciones.estacion_entrega import EstacionEntrega
+from estaciones.estacion_ensamble import EstacionEnsamble
 
 def crear_escenario1(chefs):
     
@@ -18,7 +20,7 @@ def crear_escenario1(chefs):
     Lechuga = VegetalesYFrutas("Lechuga")
     Tomate = VegetalesYFrutas("Tomate")
     Pan = PanesYBases("Pan")
-    Pan_Hotdog = PanesYBases("Pan Hotdog")
+    Pan_Hotdog = PanesYBases("Pan_Hotdog")
 
 
     hamburguesa = Receta(
@@ -53,28 +55,34 @@ def crear_escenario1(chefs):
     )
     
     recetas_posibles = [hamburguesa, hotdog, ensalada]
+
+    entrega = EstacionEntrega()
     
     # --- Estaciones ---
     estaciones = [
-        Despensa(Carne),
-        Despensa(Salchicha),
-        Despensa(Lechuga),
-        Despensa(Tomate),
-        Despensa(Pan),
         Despensa(Pan_Hotdog),
+        Despensa(Pan),
+        Despensa(Tomate),
+        Despensa(Lechuga),
+        Despensa(Salchicha),
+        Despensa(Carne),
         TablaDeCortar(),
         CocinaSartan(),
-        Freidora(),
-        EstacionEntrega([])     # la referencia a ordenes se conecta abajo
+        EstacionBasura(),
+        EstacionEnsamble(),
+        entrega
     ]
 
         # Posiciones en el grid
     posiciones = [
         (2, 2), (2, 3), (2, 5), (2, 7), (2, 8), (2, 10),
-        (6, 4), (10, 4),
-        (13, 4),
-        (15, 6)
+        (6, 3), (10, 3),
+        (13, 3),
+        (10, 6),
+        (14, 6)
     ]
+
+
     for est, pos in zip(estaciones, posiciones):
         est.pos_x, est.pos_y = pos
 
@@ -93,6 +101,8 @@ def crear_escenario1(chefs):
         intervalo_recetas=20,
         max_recetas_activas=4
     )
+
+    entrega.cocina = escenario   # conectar la estación de entrega con la cocina
     
     # Conectar la EstacionEntrega a las órdenes activas
     estaciones[-1].recetas_activas = escenario.ordenes
