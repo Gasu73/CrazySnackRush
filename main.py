@@ -38,7 +38,7 @@ def main():
                 pygame.quit()
                 sys.exit()
 
-            # ---- MENÚ DE INICIO ----
+            #MENÚ DE INICIO
             if estado == "inicio":
                 resultado = pantalla_inicio.manejar_evento(evento)
 
@@ -50,7 +50,6 @@ def main():
 
                     escenario = fabrica(chefs) #Crea el escenario con los chefs (y sus puntos acumulados)
 
-
                     escenario.iniciar()
                     
                     renderer  = Renderer(pantalla, resultado)
@@ -58,11 +57,11 @@ def main():
                     controles = Controles(escenario)
                     estado    = "jugando"
 
-            # ---- JUGANDO ----
+            #JUGANDO
             elif estado == "jugando":
                 controles.procesar_evento(evento)
 
-            # ---- FIN DE PARTIDA ----
+            #FIN DE PARTIDA
             elif estado == "fin":
                 resultado = pantalla_fin.manejar_evento(evento)
                 if resultado == "menu":
@@ -72,7 +71,7 @@ def main():
                     pygame.quit()
                     sys.exit()
 
-        # ---- DIBUJAR ----
+        #DIBUJAR
         if estado == "inicio":
             pantalla_inicio.dibujar()
 
