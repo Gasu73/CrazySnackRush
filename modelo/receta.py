@@ -8,17 +8,15 @@ class Receta:
         self.activa = True
     
     def reducir_puntos(self):
-        """Se llama cuando se vence el tiempo máximo"""
+        #Se llama cuando se vence el tiempo máximo
         self.puntos_receta = self.puntos_receta // 2
         if self.puntos_receta == 0:
             self.activa = False     # receta expirada
+
     
     def comparar_receta(self, ingredientes_entregados):
-        """
-        Recibe una lista de ingredientes y verifica
-        si coinciden con los requeridos por la receta.
-        Retorna True si la receta está completa y correcta.
-        """
+        #Compara los ingredientes entregados con los requeridos por la receta.
+
         if not isinstance(ingredientes_entregados, list):
             print("Los ingredientes entregados no están en el formato correcto.")
             return False
@@ -37,7 +35,3 @@ class Receta:
         entregados = sorted([i.nombre for i in ingredientes_entregados])
         
         return requeridos == entregados
-    
-    def __str__(self):
-        ingredientes_str = ", ".join([str(i) for i in self.lista_ingredientes])
-        return f"{self.nombre} | Puntos: {self.puntos_receta} | Ingredientes: {ingredientes_str}"

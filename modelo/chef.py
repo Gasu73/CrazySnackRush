@@ -6,7 +6,7 @@ class Chef:
         self.ingrediente_en_mano = None    # solo puede cargar 1 o una lista de ingredientes (ensamble)
 
 
-        #NUEVO — posición en el grid
+        #posición en el grid
         self.pos_x = pos_x
         self.pos_y = pos_y
         self.direccion = (1, 0)     # mira a la derecha por defecto

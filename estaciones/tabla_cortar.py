@@ -18,7 +18,6 @@ class TablaDeCortar(Estacion):
             ingrediente = chef.ingrediente_en_mano
 
             if not self.acepta_ingrediente(ingrediente):
-                print(f"La tabla no acepta {ingrediente.nombre}.")
                 return
             
             if self.ingrediente_actual is not None:
@@ -44,7 +43,7 @@ class TablaDeCortar(Estacion):
         
         # Si está crudo, iniciar el proceso de corte
         if not self.en_proceso:
-            print(f"Cortando {self.ingrediente_actual.nombre}...")
+            print(f"Cortando {self.ingrediente_actual.nombre}")
             self.en_proceso = True        # esto cambiará por un timer en la UI
             self.ingrediente_actual.preparar()
             self.en_proceso = False

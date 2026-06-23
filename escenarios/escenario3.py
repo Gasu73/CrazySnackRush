@@ -131,7 +131,5 @@ def crear_escenario3(chefs):
     # Conectar la estación de entrega con el escenario
     entrega.cocina = escenario
 
-    # Conectar las órdenes activas
-    entrega.recetas_activas = escenario.ordenes
 
     return escenario

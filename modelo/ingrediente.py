@@ -6,5 +6,5 @@ class Ingrediente(ABC):
         self.estado = "crudo"      # crudo | preparado | quemado
     
     @abstractmethod
-    def preparar(self):
+    def preparar(self): #se implementa en las subclases
         pass

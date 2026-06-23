@@ -13,7 +13,7 @@ from estaciones.estacion_ensamble import EstacionEnsamble
 
 def crear_escenario1(chefs):
     
-    # --- Recetas posibles (plantillas) ---
+    #Recetas posibles (plantillas)
 
     Carne = Proteina("Carne")
     Salchicha = Proteina("Salchicha")
@@ -58,7 +58,7 @@ def crear_escenario1(chefs):
 
     entrega = EstacionEntrega()
     
-    # --- Estaciones ---
+    #Estaciones
     estaciones = [
         Despensa(Pan_Hotdog),
         Despensa(Pan),
@@ -99,12 +99,10 @@ def crear_escenario1(chefs):
         recetas_posibles=recetas_posibles,
         tiempo_juego=120,
         intervalo_recetas=20,
-        max_recetas_activas=4
+        max_recetas_activas=3
     )
 
     entrega.cocina = escenario   # conectar la estación de entrega con la cocina
     
-    # Conectar la EstacionEntrega a las órdenes activas
-    estaciones[-1].recetas_activas = escenario.ordenes
     
     return escenario

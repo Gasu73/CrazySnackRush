@@ -6,7 +6,7 @@ import threading
 
 TIEMPO_FRITURA = 6
 
-class Freidora(Estacion):
+class Freidora(Estacion): 
     def __init__(self):
         super().__init__(
             nombre="Freidora",
@@ -15,19 +15,20 @@ class Freidora(Estacion):
         self.en_proceso = False
     
     def _freir(self):
-        print(f"Friendo {self.ingrediente_actual.nombre}...")
+
         time.sleep(TIEMPO_FRITURA)
         if self.ingrediente_actual:
             self.ingrediente_actual.preparar()
-            print(f"🍟 {self.ingrediente_actual.nombre} listo!")
+
         self.en_proceso = False
     
     def interactuar(self, chef):
         # Chef deja el ingrediente
         if chef.ingrediente_en_mano is not None:
+
             ingrediente = chef.ingrediente_en_mano
 
-            if not self.acepta_ingrediente(ingrediente):
+            if not self.acepta_ingrediente(ingrediente): #Metodo de la clase base Estacion
                 print(f"La freidora no acepta {ingrediente.nombre}.")
                 return
             
@@ -36,8 +37,9 @@ class Freidora(Estacion):
                 return
             
             self.ingrediente_actual = chef.soltar_ingrediente()
+
             self.en_proceso = True
-            hilo = threading.Thread(target=self._freir, daemon=True)
+            hilo = threading.Thread(target=self._freir, daemon=True) #no bloquea el hilo principal
             hilo.start()
             return
         
@@ -48,8 +50,7 @@ class Freidora(Estacion):
         
         if self.ingrediente_actual.estado == "listo":
             chef.recoger_ingrediente(self.ingrediente_actual)
-            print(f"{chef.nombre} recogió {self.ingrediente_actual.nombre} (frito).")
             self.ingrediente_actual = None
             return
         
-        print("Aún se está friendo, espera...")
+        print("Aún se está friendo")
